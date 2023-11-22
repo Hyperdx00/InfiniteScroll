@@ -1,0 +1,31 @@
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(56, 59, 55);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(8, 138, 8);
+}
+.show {
+  display: block !important;
+}
+.hide {
+  display: none;
+}
+.scrollUp {
+  background: linen;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  border-radius: 50%;
+}

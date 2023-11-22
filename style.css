@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: sans-serif;
+  background: #f3f3f3;
+  font-family: "Ubuntu", sans-serif;
+  overflow: hidden;
+}
+.navigation {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 80px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: #233136;
+  border-bottom: 1px solid #a08b8b30;
+  transition: all 0.2s ease-in-out;
+  color: #fff;
+  box-shadow: 0px 0px 13px 1px #186fbd;
+}
+.navigation li {
+  list-style: none;
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  cursor: pointer;
+  letter-spacing: 1px;
+  padding: 10px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+
+#loading {
+  background: url(Spinnercolor.gif) no-repeat center center;
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px);
+  display: none;
+}
+
+main {
+  margin-top: 100px;
+  padding: 10px 150px;
+}
+.container {
+  background: #fff;
+}
+.users__container {
+  height: 500px;
+  overflow: auto;
+  background: #fff;
+  margin-top: 3px;
+}
+
+@media (max-width: 1060px) {
+  main {
+    margin-top: 100px;
+    padding: 5px 5px;
+  }
+}
