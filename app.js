@@ -1,26 +1,27 @@
 let pageNumber = 1;
 let pageSize = 10;
 let isPageLoad = true;
-const userContainer = document.querySelector(".users__container");
+const postContainer = document.querySelector(".posts__container");
 const loadingEle = document.querySelector("#loading");
 
 const toggleLoading = (isLoading) => {
   loadingEle.classList.toggle("show", isLoading);
 };
 
-const renderUser = (user) => {
+const renderPost = (post) => {
   let {
+    id,
     description,
     url,
-    type: { tutorial },
+    type,
     topics,
     levels,
 
-  } = user;
+  } = post;
+  
   let htmlStr = `
-  <div class="user">
+  
     <div class="card-container">
-    
         <div class="card">
           <img src="https://via.placeholder.com/150" alt="Avatar" class="card-img">
             <div class="container-card">
@@ -28,46 +29,68 @@ const renderUser = (user) => {
                     <h4><b>${description}</b></h4>
               </div>
               <div class="card-body">
+                
                 <p>${url}<p>
-                <p>${tutorial}<p>
+                <p>${type}<p>
                 <p>${topics}<p>
                 <p>${levels}<p>
               </div>
             </div>
         </div>
-
     </div>
-  </div>
+  
 `;
 
-  userContainer.insertAdjacentHTML("beforeend", htmlStr);
+  postContainer.insertAdjacentHTML("beforeend", htmlStr);
 };
 
-async function getRandomUsers(informations) {
-  
+async function getPost(pageNumber, pageSize) {
+
   let url = `https://api.sampleapis.com/codingresources/codingResources`;
+  // let url = `https://api.sampleapis.com/codingresources/codingResources/?id=${pageNumber}&id=${pageSize}`;
+  // let url = `https://randomuser.me/api/?page=${pageNumber}&results=${pageSize}&seed=abc`;
+
+  // let url = `https://api.sampleapis.com/codingresources/codingResources`;
   // fetch(url)
   //   .then((resp) => resp.json())
   //   .then((data) => {
-  //     data && data.results && data.results.forEach((user) => renderUser(user));
+  //     // data && data.results && data.results.forEach((post) => renderPost(post));
+  //     // console.log(data)
+
+  //     data.forEach((post) => renderPost(post));
   //     console.log(data)
+
+  //     // const result = data.description;
+  //     // console.log(result);
   //   });
+  
+
+    
+
+  // const post[] = data;
+
+
+  // if fetch all and convert to object and make parameter using object instead and then return will it work?
+
+  // let pageNumber = 1;
+  // let pageSize = data.length;
+
   const resp = await fetch(url);
   const data = await resp.json();
   return data;
-  
+
 }
 
 const getLastUseEle = () =>
-  document.querySelector(".users__container > .user:last-child");
+  document.querySelector(".posts__container > .post:last-child");
 
-const loadUsers = (informations) => {
+const loadPost = (pageNumber, pageSize) => {
   return new Promise((resolve, reject) => {
-    getRandomUsers(informations)
+    getPost(pageNumber, pageSize)
       .then((data) => {
         data &&
           data.results &&
-          data.results.forEach((user) => renderUser(user));
+          data.results.forEach((post) => renderPost(post));
         if (isPageLoad) {
           obseveLastUser();
           isPageLoad = false;
@@ -80,7 +103,7 @@ const loadUsers = (informations) => {
   });
 };
 toggleLoading(true);
-loadUsers(informations)
+loadPost(pageNumber, pageSize)
   .then((data) => {
     toggleLoading(false);
   })
@@ -89,11 +112,11 @@ loadUsers(informations)
 const infScrollCallback = (entries, observer) => {
   const entry = entries[0];
   if (!entry.isIntersecting) return;
-  informations += 1;
+  pageNumber += 1;
   toggleLoading(true);
-  loadUsers(informations)
+  loadPost(pageNumber, pageSize)
     .then((resp) => {
-      obseveLastUser();
+      obseveLastPost();
       toggleLoading(false);
     })
     .catch((error) => toggleLoading(false));
@@ -102,6 +125,6 @@ const infScrollCallback = (entries, observer) => {
 
 const infScrollObserver = new IntersectionObserver(infScrollCallback, {});
 
-const obseveLastUser = () => {
+const obseveLastPost = () => {
   infScrollObserver.observe(getLastUseEle());
 };

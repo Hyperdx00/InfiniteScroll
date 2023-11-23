@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   height: 100vh;
@@ -11,6 +12,7 @@ body {
   font-family: "Ubuntu", sans-serif;
   overflow: hidden;
 }
+
 .navigation {
   display: flex;
   justify-content: space-around;
@@ -27,6 +29,7 @@ body {
   color: #fff;
   box-shadow: 0px 0px 13px 1px #186fbd;
 }
+
 .navigation li {
   list-style: none;
   font-size: 1.5rem;
@@ -54,15 +57,56 @@ main {
   margin-top: 100px;
   padding: 10px 150px;
 }
+
 .container {
   background: #fff;
 }
-.users__container {
+
+.posts__container {
   height: 500px;
   overflow: auto;
   background: #fff;
   margin-top: 3px;
 }
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: 0.3s;
+  margin: 10px;
+  width: 300px;
+}
+
+.card-header {
+  padding: 5px;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container-card {
+  padding: 2px 16px;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin: 20px;
+}
+
+.card-img {
+  width: 100%;
+  height: auto;
+  border-radius: 6 px;
+}
+
 
 @media (max-width: 1060px) {
   main {
