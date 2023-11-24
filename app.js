@@ -1,5 +1,5 @@
 let pageNumber = 1;
-let pageSize = 10;
+// let pageSize2 = pagesize;
 let isPageLoad = true;
 const postContainer = document.querySelector(".posts__container");
 const loadingEle = document.querySelector("#loading");
@@ -13,15 +13,14 @@ const renderPost = (post) => {
     id,
     description,
     url,
-    type,
+    types,
     topics,
     levels,
 
   } = post;
-  
+
   let htmlStr = `
   
-    <div class="card-container">
         <div class="card">
           <img src="https://via.placeholder.com/150" alt="Avatar" class="card-img">
             <div class="container-card">
@@ -29,55 +28,29 @@ const renderPost = (post) => {
                     <h4><b>${description}</b></h4>
               </div>
               <div class="card-body">
-                
+                <p>${id}<p>
                 <p>${url}<p>
-                <p>${type}<p>
+                <p>${types}<p>
                 <p>${topics}<p>
                 <p>${levels}<p>
               </div>
             </div>
-        </div>
-    </div>
-  
+        </div>  
+
 `;
 
   postContainer.insertAdjacentHTML("beforeend", htmlStr);
 };
 
-async function getPost(pageNumber, pageSize) {
+async function getPost() {
 
   let url = `https://api.sampleapis.com/codingresources/codingResources`;
-  // let url = `https://api.sampleapis.com/codingresources/codingResources/?id=${pageNumber}&id=${pageSize}`;
-  // let url = `https://randomuser.me/api/?page=${pageNumber}&results=${pageSize}&seed=abc`;
-
-  // let url = `https://api.sampleapis.com/codingresources/codingResources`;
-  // fetch(url)
-  //   .then((resp) => resp.json())
-  //   .then((data) => {
-  //     // data && data.results && data.results.forEach((post) => renderPost(post));
-  //     // console.log(data)
-
-  //     data.forEach((post) => renderPost(post));
-  //     console.log(data)
-
-  //     // const result = data.description;
-  //     // console.log(result);
-  //   });
-  
-
-    
-
-  // const post[] = data;
-
-
-  // if fetch all and convert to object and make parameter using object instead and then return will it work?
-
-  // let pageNumber = 1;
-  // let pageSize = data.length;
 
   const resp = await fetch(url);
   const data = await resp.json();
+  console.log(data)
   return data;
+  
 
 }
 
@@ -88,11 +61,20 @@ const loadPost = (pageNumber, pageSize) => {
   return new Promise((resolve, reject) => {
     getPost(pageNumber, pageSize)
       .then((data) => {
-        data &&
-          data.results &&
-          data.results.forEach((post) => renderPost(post));
+        data.forEach((post) => renderPost(post));
+        console.log(data)
+        const post2 = data;
+
+        console.log(post2);
+
+        for (let i = 0; i < post2.length; i += 4) {
+          let pageSize = post2.slice(i, i + 4);
+          console.log(pageSize);
+        }
+        // return pageSize;
+
         if (isPageLoad) {
-          obseveLastUser();
+          obseveLastPost();
           isPageLoad = false;
         }
         resolve("Completed Rendering");
@@ -102,6 +84,7 @@ const loadPost = (pageNumber, pageSize) => {
       });
   });
 };
+
 toggleLoading(true);
 loadPost(pageNumber, pageSize)
   .then((data) => {
